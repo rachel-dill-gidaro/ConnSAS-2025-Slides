@@ -1,0 +1,287 @@
+---
+title: "Template"
+author: Author name goes here
+format: html
+editor: visual
+---
+
+## Welcome Video
+
+[(Video will go here.)]{style="color: red;"}
+
+The goal of the welcome video is to introduce the module and the motivation behind it. This video can be a great opportunity to get athletes involved in the creation of the module. This video can also be a way of explaining some of the details of the sport, especially if the sport you are focusing on is not widely understood. Videos can also be incorporated in other areas of the module if desired. In some modules videos of statistical concepts have been incorporated into the body of the module to help with understanding.
+
+[(Optional?)]{style="color: red;"}
+
+## Introduction
+
+In the introduction section you can add more context that was not included in the video, or to highlight the important points from the video. In this section you should discuss the problem to be solved and provide high-level context on how it is to be solved (e.g., can we predict whether a batted ball is going to be a home run based on launch angle and launch speed using a classification tree model?).
+
+After the introduction interactive tabs can be used to highlight additional information such as Learning Objectives, Activity Length, Methods, Technology Requirements if any (this could also be included under methods), or other additional information you want to add, but maybe only for those that would want to know more. (For example: in NASCAR Transformation Module their were two additional tabs. One for "More about NASCAR" and "How NASCAR uses data"(which held a video inside it))
+
+Here is an example of Learning Objectives from our published module, "MLB Injuries - Introductory Time Series Analysis":
+
+Note this is a longer example it is perfectly okay to have fewer learning objectives.
+
+::: {.callout-note collapse="true" title="Learning Objectives" appearance="minimal"}
+By the end of this activity, you will be able to:
+
+1.  Create time series plots in R
+
+2.  Identify trends, seasonality, cycles, and outliers in time series data
+
+3.  Check for autocorrelation in time series data
+
+4.  Decompose time series data into trend, seasonal, and residual components
+
+5.  Interpret residual plots to assess model fit
+
+6.  Split time series data into training and test sets to evaluate forecasting models
+
+7.  Use basic forecasting techniques to predict future injury counts
+
+8.  Assess the accuracy of forecasts
+:::
+
+::: {.callout-note collapse="true" title="Activity Length" appearance="minimal"}
+In this tab you should include how a teacher might use this module and how long the activity will take. For example: "This activity would be suitable for an in class example or homework assignment. This activity could take between 45 minutes to 1 hour and 15 minutes depending on the students familiarity with R or python."
+:::
+
+::: {.callout-note collapse="true" title="Methods" appearance="minimal"}
+To successfully complete this worksheet, students should have prior knowledge of the following statistical concepts:(For example:)
+
+1.  Anything that you are not trying to teach them but feel they should already know. For Example:
+2.  Familiarity with R or python.
+3.  Familiarity with data cleaning.
+
+**Technology Requirement:**
+
+1.  This activity is built for students with a basic understanding of R or python.
+:::
+
+## Data
+
+In the data section you should explain where the data comes from/how you gathered it, what variables are included, and any other information that should be explained as it concerns the data set. This section may also include code showing how to load the data. In some cases, you may want to use the section to show how to clean the data if it is simple and not a learning objective. This may also be an area where you can highlight any packages you will need for the analysis that is to come.
+
+It can be helpful to highlight the data set and include the csv as shown:
+
+| Variable | Description |
+|----|-------------|
+| Column name | A description of this variable, including units when possible |
+| Column name 2 | A description of this variable, including units when possible|
+
+:[filename.csv](../data/filename.csv)
+
+For the link above, change filename.csv to the name of the data file. Leave the
+`../data/` part in the link; this is where the data will live in the system.
+
+If there are multiple data files, repeat the table, including the line starting
+with `:`, for each data file.
+
+To highlight what this can look like, I will use the "NFL Draft Combine" data set:
+
+In this lesson, we will be using the "NFL Draft Combine" data set to understand data visualization. To begin, copy the code below in order to load the data set. (When this renders you will notice that when you hover over the code chunk a clipboard icon will appear which allows you to easily copy the code chunk.)
+
+```{r, echo = FALSE}
+setwd("C:/Users/rachel.gidaro/OneDrive - West Point/SCORE/Template")
+```
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+```{r}
+nfl_data <- read.csv("nfl_combine.csv")
+head(nfl_data)
+```
+
+The data set has statistics with variables for player draft information and how they performed in events at the NFL Scouting Combine. The variables for draft information are position and Round. The variables for the NFL Scouting Combine events are forty, vertical (in inches), bench_reps, broad_jump (in inches), and shuttle. Some entries are NA if a player was not drafted or did not participate in some events. Each row of data gives gives information on position, draft round, and event scores for one of 6128 players at the NFL Scouting Combine between 2004 and 2023. For further details about the data visit: [NFL DRAFT COMBINE](https://data.scorenetwork.org/football/nfl-draft-combine.html)
+
+
+
+
+## Methods / Instructional Content:
+
+You likely will not call this next section "Methods / Instructional Content". This section will likely be titled something related to the goal of this module. For example, "Ordinal logistic Regression", "Brier Score", "Visualizing Time Series Data", etc. In this section or sections you are highlighting the method or instructional content you have chosen to focus on. This can consist of formulas (quarto files can use Tex syntax), visualizations, code, anything that will help students understand the topic. Within this section or sections, you are including exercises and activities for students to complete. Excersises/Activities can also be their own section.
+
+For example:
+
+Visualizing data can be done in many ways. A simple example can be scatterplot:
+
+```{r}
+plot(nfl_data$forty, nfl_data$vertical)
+```
+
+While this visual allows us to observe the a trend, we can improve our visual by adding a title, x labels, y labels, and color.
+
+```{r}
+plot(nfl_data$forty, nfl_data$vertical,
+        main="Forty vs Vertical", 
+         xlab="Forty Yard Dash Time", 
+         ylab="Vertical Jump (in inches)", 
+        col="green")
+```
+
+::: {.callout-note collapse="true" title="Exercise 1" appearance="minimal"}
+Now that you have visualized Forty vs Vertical, attempt to:
+
+1.  Plot Shuttle by Broad Jump.
+2.  Then add appropriate labels.
+3.  Then make the color of the dots blue.
+:::
+
+::: {.callout-note collapse="true" title="Exercise 1 Answers" appearance="minimal"}
+To do all of the following, run the code below:
+
+```{r}
+plot(nfl_data$shuttle, nfl_data$broad_jump,
+        main="Shuttle vs Broad Jump", 
+         xlab="20-yard Shuttle Time", 
+         ylab="Broad Jump (in inches)", 
+        col="blue")
+```
+:::
+
+## Conclusion
+
+A conclusion (perhaps with an accompanying video) should summarize the information that students should be able to take away after now having completed the module.
+
+# Refrences
+
+Please include any references here.
+
+## Topics to consider:
+This is by no means a complete list of module topics one could do, but is a good list for anyone looking for inspiration. 
+
+::: {.columns}
+::: {.column width="33%"}
+- ANOVA  
+- Confidence Interval  
+- Correlation  
+- Data Cleaning  
+- Difference in Means  
+- Linear Regression  
+- Logistic Regression  
+- Chi-Squared Test  
+- Data Wrangling  
+- EDA  
+- Histogram  
+- Hypothesis Testing  
+- Joining  
+- Multiple Linear Regression  
+- Outlier Detection  
+- Summary Statistics  
+- Two Sample Means  
+- Boxplots  
+- Data Visualization  
+- Multiple Comparisons  
+- Normality Testing  
+- Paired Data  
+- Simple Linear Regression  
+- Single Proportion  
+- Variable Types  
+- Bernoulli Distribution  
+- Binary Data  
+- Binomial Distribution  
+- Bootstrap  
+- Brier Score  
+:::
+
+::: {.column width="33%"}
+- Categorical Data  
+- Categorical Variables  
+- Collinearity  
+- Conditional Probability  
+- Confounding  
+- Confusion Matrix  
+- Data Scraping  
+- Decision Errors  
+- Decision Trees  
+- ELO Ratings  
+- Exponential Distribution  
+- F1 Score  
+- Feature Engineering  
+- Filtering  
+- Fisher Exact Test  
+- Forecasting  
+- Gini Index  
+- Group By  
+- Hypothesis Test  
+- Influential Points  
+- Interactions  
+- Kaplan-Meier  
+- Law of Large Numbers  
+- Log Rank Test  
+- Missing Data  
+- Model Assessment  
+- Model Diagnostics  
+- Mosaic Plots  
+- Multiple Regression  
+- One Sample Means  
+:::
+
+::: {.column width="33%"}
+- One Sample Proportion  
+- Ordinal Regression  
+- Poisson Process  
+- Polynomial Regression  
+- Power  
+- Prediction  
+- Prediction Intervals  
+- Proportions  
+- Quantiles  
+- Randomized Block ANOVA  
+- RAPM  
+- Regularization  
+- Ridge Regression  
+- Sample Size Calculations  
+- Scatterplots  
+- Single Mean  
+- Skewness  
+- SQL  
+- Summarize  
+- Survival Analysis  
+- Time Series  
+- Time Series Decomposition  
+- Transformation  
+- Tukey's HSD  
+- Two Sample Proportions  
+- Unconditional Probability  
+- Undersampling  
+- Visualizations  
+:::
+:::
+
+
+## Quarto tools
+
+For educators that are new to Quarto, below are helpful tools.
+
+If you or a student is proficient in both python and R, it can be of value to create a toggle between the two coding languages as follows:
+
+::: panel-tabset
+## R
+
+```{r}
+2 + 2
+```
+
+## Python
+
+```{python}
+2 + 2
+```
+:::
+
+Sometimes you may not want to include information in the main body of the module and would rather have hints or other comments off to the side. You can use the code below to do this:
+
+::: column-margin
+Hints on exercises or other fun comments can be included here.
+:::
+
+If you prefer to use Rmarkdown, the package "learnr" has helpful tools to make interactive webpages.
+
+For other formatting help: [here is a guide to the basics](https://quarto.org/docs/authoring/markdown-basics.html).
+
+
+
